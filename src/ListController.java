@@ -19,6 +19,8 @@ public class ListController {
 		// years should be int, salary should be a double....
 		// Then, add the new employee to the employees list!
 		// for initial demo and debugging, set DEBUG to true;
+		
+		employees.add(new Employee(name, SSN, Double.parseDouble(salary), Integer.parseInt(years)));
 		if (DEBUG) System.out.println(employees);
 
 	}
