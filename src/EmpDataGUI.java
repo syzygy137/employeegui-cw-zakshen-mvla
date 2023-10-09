@@ -3,6 +3,8 @@
  */
 
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
@@ -21,6 +23,8 @@ import javafx.stage.Stage;
  *
  */
 public class EmpDataGUI extends Application {
+	private BorderPane view = new BorderPane();
+	private ScrollPane scroll = new ScrollPane();
     private GridPane main = new GridPane();	
     private ListController controller = new ListController();
     // TODO #1:
@@ -35,6 +39,7 @@ public class EmpDataGUI extends Application {
     public void start(Stage primaryStage) {
     
     	Scene scene = new Scene(main, 400, 400);
+    	Scene scene2 = new Scene(view, 400, 400);
 
 	// TODO #2:
     	// create Labels for Name, SSN, Salary and Years
@@ -42,6 +47,14 @@ public class EmpDataGUI extends Application {
     	Label SSNLabel = new Label("SSN: ");
     	Label salaryLabel = new Label("Salary: ");
     	Label yearsLabel = new Label("Years: ");
+    	Label title = new Label("Employee Data");
+    	
+    	Button backButton = new Button("Back");
+    	backButton.setOnAction(e -> primaryStage.setScene(scene));
+    	
+    	view.setTop(title);
+    	view.setBottom(backButton);
+    	view.setCenter(scroll);
     	
 	// TODO #3
     	// instantiate (new) TextFields (already declared above) for Name, SSN, Salary and Years
@@ -54,7 +67,17 @@ public class EmpDataGUI extends Application {
         // Create Add Employee Button, and write the setOnAction handler to call the controller
     	// to add the new Employee data
     	Button empButton = new Button("Add Employee");
+    	Button viewButton = new Button("View Employees");
+    	Button saveDB = new Button("Save DB");
     	empButton.setOnAction(e -> controller.addEmployee(nameField.getText(), SSNField.getText(), salaryField.getText(), yearsField.getText()));
+    	viewButton.setOnAction(e -> {viewEmployeeDB(); primaryStage.setScene(scene2); });
+    	saveDB.setOnAction(e -> {
+			try {
+				controller.saveData();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		});
     	
 	// TODO #5
     	// add all the labels, textfields and button to gridpane main. refer to the slide
@@ -69,6 +92,8 @@ public class EmpDataGUI extends Application {
     	main.add(SSNField, 1, 1);
     	main.add(salaryField, 1, 2);
     	main.add(yearsField, 1, 3);
+    	main.add(viewButton, 1, 4);
+    	main.add(saveDB, 2, 4);
     	
     	primaryStage.setTitle("Employees");
         primaryStage.setScene(scene);
@@ -78,6 +103,9 @@ public class EmpDataGUI extends Application {
     // don't worry about this yet - part of part2
     private void viewEmployeeDB() {
     	String[] empDataStr = controller.getEmployeeDataStr();
+    	ListView<String> lv = new ListView<>(FXCollections.observableArrayList(empDataStr));
+    	lv.setPrefWidth(400);
+    	scroll.setContent(lv);
     }
     
   /**
