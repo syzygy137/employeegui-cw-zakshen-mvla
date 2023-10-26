@@ -388,9 +388,17 @@ class ListControllerADENTest {
 		int numEmployees = ctrl.getNumEmployees();
 		assertEquals(0,numEmployees);
 		System.out.println("Testing that sortByName function works");
-
 		assertTrue(addAndCheckEmployee(ctrl));
+		System.out.println();
+		for (Employee e : ctrl.employees) {
+			System.out.println(e.getFirstName() + " " + e.getLastName());
+		}
 		ctrl.sortByName();
+		System.out.println();
+		for (Employee e : ctrl.employees) {
+			System.out.println(e.getFirstName() + " " + e.getLastName());
+		}
+		System.out.println();
 		numEmployees = ctrl.getNumEmployees();
 		String[] empDataStrArray = ctrl.getEmployeeDataStr();
 		assertEquals(numEmployees,empDataStrArray.length);

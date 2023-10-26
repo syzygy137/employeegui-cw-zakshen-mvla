@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import myfileio.MyFileIO;
 
 public class ListController {
-	private ArrayList<Employee> employees;
+	public ArrayList<Employee> employees;
 	private static final boolean DEBUG = true;
 	private MyFileIO fileio = new MyFileIO();
 	
@@ -29,7 +29,7 @@ public class ListController {
 	}
 
 	// adds a new employee
-	String addEmployee(String lastName, String firstName, String SSN, String age, String pronouns, String salary, String years, String department) {
+	String addEmployee(String firstName, String lastName, String SSN, String age, String pronouns, String salary, String years, String department) {
 		// TODO #6
 		// controller needs to convert the numeric string data -
 		// use Integer.parseInt() or Double.parseDouble() for ints and doubles
@@ -58,10 +58,16 @@ public class ListController {
 			return "Small Salary";
 		if (Double.parseDouble(salary) > 100000000)
 			return "Big Salary";
-		employees.add(new Employee(lastName, firstName, SSN, Integer.parseInt(age), pronouns, Double.parseDouble(salary), Integer.parseInt(years), department));
-		if (DEBUG) System.out.println(employees);
-		return "Ok";
+		employees.add(new Employee(firstName, lastName, SSN, Integer.parseInt(age), pronouns, Double.parseDouble(salary), Integer.parseInt(years), department));
+		if (employees.size() == 1) {
+			employees.get(0).setID(1);
+			employees.get(0).resetID();
+		}
+		//if (DEBUG) System.out.println(employees);
+		return "";
 	}
+	
+	
 	
 	
 	// returns a string array of the employee information to be viewed
@@ -77,7 +83,11 @@ public class ListController {
 		
 	}
 	
-	public void saveData() throws IOException {
+	public int getNumEmployees() {
+		return employees.size();
+	}
+	
+	public void saveEmployeeDB() throws IOException {
 		File file = new File("empDB.dat");
 		fileio.createEmptyFile("empDB.dat");
 		BufferedWriter bw = fileio.openBufferedWriter(file);
@@ -108,6 +118,9 @@ public class ListController {
 	
 	private class ByName implements Comparator<Employee> {
 		public int compare(Employee e1, Employee e2) {
+			if (e1.getLastName().compareTo(e2.getLastName()) == 0) {
+				return e1.getFirstName().compareTo(e2.getFirstName());
+			}
 			return e1.getLastName().compareTo(e2.getLastName());
 		}
 	}

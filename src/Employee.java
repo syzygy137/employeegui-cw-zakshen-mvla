@@ -13,7 +13,7 @@ public class Employee {
 	
 
 
-public Employee (String lastName, String firstName, String SSN, int age, String pronouns, double salary, int years, String department) {
+public Employee (String firstName, String lastName, String SSN, int age, String pronouns, double salary, int years, String department) {
 	lastID++;
 	empID = lastID;
 	this.lastName = lastName;
@@ -116,8 +116,8 @@ public String getSSN() {
 }
 
 
-public void setSSN(String sSN) {
-	SSN = sSN;
+public void setSSN(String SSN) {
+	SSN = SSN;
 }
 
 public int getID() {
@@ -126,6 +126,10 @@ public int getID() {
 
 public void setID(int id) {
 	empID = id;
+}
+
+public void resetID() {
+	lastID = 1;
 }
 
 

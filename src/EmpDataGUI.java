@@ -133,9 +133,9 @@ public class EmpDataGUI extends Application {
 
     	
     	empButton.setOnAction(e -> {
-    		switch(controller.addEmployee(lastField.getText(), firstField.getText(), SSNField.getText(), ageField.getText(), 
+    		switch(controller.addEmployee(firstField.getText(), lastField.getText(), SSNField.getText(), ageField.getText(), 
     							pronounsField.getText(), salaryField.getText(), yearsField.getText(), ((RadioButton) tg.getSelectedToggle()).getText())) {
-    		case "Ok":
+    		case "":
 	    		lastField.clear();
 	    		firstField.clear();
 	    		SSNField.clear();
@@ -213,7 +213,7 @@ public class EmpDataGUI extends Application {
     	viewButton.setOnAction(e -> {viewEmployeeDB(); primaryStage.setScene(scene2); });
     	saveDB.setOnAction(e -> {
 			try {
-				controller.saveData();
+				controller.saveEmployeeDB();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
