@@ -211,13 +211,7 @@ public class EmpDataGUI extends Application {
     	});
     	
     	viewButton.setOnAction(e -> {viewEmployeeDB(); primaryStage.setScene(scene2); });
-    	saveDB.setOnAction(e -> {
-			try {
-				controller.saveEmployeeDB();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		});
+    	saveDB.setOnAction(e -> controller.saveEmployeeDB());
     	
     	main.add(lastLabel, 0, 1);
     	main.add(firstLabel, 0, 2);

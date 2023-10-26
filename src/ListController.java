@@ -21,11 +21,7 @@ public class ListController {
 	
 	public ListController () {
 		employees = new ArrayList<Employee>();
-		try {
-			loadData();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		loadData();
 	}
 
 	// adds a new employee
@@ -87,32 +83,43 @@ public class ListController {
 		return employees.size();
 	}
 	
-	public void saveEmployeeDB() throws IOException {
+	public void saveEmployeeDB() {
+		this.sortByID();
 		File file = new File("empDB.dat");
-		fileio.createEmptyFile("empDB.dat");
-		BufferedWriter bw = fileio.openBufferedWriter(file);
-		if (fileio.checkFileStatus(file, false) == 0 || fileio.checkFileStatus(file, false) == 7) {
-			for (int i = 0; i < employees.size(); i++) {
-				Employee emp = employees.get(i);
-				bw.write(emp.getFirstName() + "|,|" + emp.getLastName() + "|,|" + emp.getSSN() + "|,|" + Integer.toString(emp.getAge()) + "|,|" + 
-						 emp.getPronouns() + "|,|" + emp.getFixedPointSalary() + "|,|" + Integer.toString(emp.getYears()) + "|,|" + emp.getDepartment() + "\n");
+		try {
+			fileio.createEmptyFile("empDB.dat");
+			BufferedWriter bw = fileio.openBufferedWriter(file);
+			if (fileio.checkFileStatus(file, false) == 0 || fileio.checkFileStatus(file, false) == 7) {
+				for (int i = 0; i < employees.size(); i++) {
+					Employee emp = employees.get(i);
+					
+						bw.write(emp.getFirstName() + "|,|" + emp.getLastName() + "|,|" + emp.getSSN() + "|,|" + Integer.toString(emp.getAge()) + "|,|" + 
+								 emp.getPronouns() + "|,|" + emp.getFixedPointSalary() + "|,|" + Integer.toString(emp.getYears()) + "|,|" + emp.getDepartment() + "|,|" + emp.getID() + "|,|\n");
+					
+				}
+				fileio.closeFile(bw);
 			}
-			fileio.closeFile(bw);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 	}
 	
-	public void loadData() throws IOException {
+	public void loadData() {
 		File file = new File("empDB.dat");
-		BufferedReader br = fileio.openBufferedReader(file);
-		if (fileio.checkFileStatus(file, true) == 0) {
-			String line = br.readLine();
-			while (line != null) {
-				String[] data = line.split("\\|,\\|");
-				this.addEmployee(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
-				line = br.readLine();
+		try {
+			BufferedReader br = fileio.openBufferedReader(file);
+			if (fileio.checkFileStatus(file, true) == 0) {
+				String line = br.readLine();
+				while (line != null) {
+					String[] data = line.split("\\|,\\|");
+					this.addEmployee(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
+					line = br.readLine();
+				}
+				fileio.closeFile(br);
 			}
-			fileio.closeFile(br);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
