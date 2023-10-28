@@ -220,10 +220,11 @@ public class MyFileIO {
 	 */
 	public BufferedReader openBufferedReader(File file) {
 		BufferedReader br = null;
-		if (openFileReader(file) == null) {
+		FileReader fr = openFileReader(file);
+		if (fr == null) {
 			return null;
 		}
-		br = new BufferedReader(openFileReader(file));
+		br = new BufferedReader(fr);
 		return br;
 	}
 	
@@ -235,10 +236,11 @@ public class MyFileIO {
 	 */
 	public BufferedWriter openBufferedWriter(File file) {
 		BufferedWriter bw = null;
-		if (openFileWriter(file) == null) {
+		FileWriter fw = openFileWriter(file);
+		if (fw == null) {
 			return null;
 		}
-		bw = new BufferedWriter(openFileWriter(file));
+		bw = new BufferedWriter(fw);
 		return bw;
 	}
 	
